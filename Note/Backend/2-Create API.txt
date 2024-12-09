@@ -1,0 +1,160 @@
+2-Create API 
+
+app-api folder - 2 folder(email and blog)
+blog folder- route.js
+----------------------
+check our API is working or not  
+
+    const{NextResponse} = require("next/server")
+    
+    export async function GET(request) {
+ 
+    return NextResponse.json({msg:"API working"})
+}
+
+open the browser 
+http://localhost:3000/api/blog
+
+-------------------------------------------------
+route.js :-
+    import { ConnectDB } from "@/lib/config/db";
+    const{NextResponse} = require("next/server")
+    import {writeFile} from 'fs/promises'
+
+    const LoadDB=async () =>{
+        await ConnectDB();
+    }
+
+    LoadDB();
+    
+    export async function GET(request) {
+ 
+    return NextResponse.json({msg:"API working"})
+}
+
+export async function POST(request) {
+    const formData=await request.formData();
+    const timestamp = Date.now();
+
+    const image = formData.get('image');
+    const imageByteData = await image.arrayBuffer();
+    const buffer = Buffer.from(imageByteData);
+    const path = `./public/${timestamp}_${image.name}`;
+    await writeFile(path,buffer);
+    const imageUrl =`/${timestamp}_${image.name}`;
+    console.log(imageUrl);
+    return NextResponse.json({imageUrl})
+}
+----------------------------------------------------
+
+Install Thunder Client extension:-
+new request:- select post methode:- add the url "http://localhost:3000/api/blog"
+------------------------------------------------------
+
+Body ->Form -> Choose file ->Add the same field name from route->send
+
+I got an error so I created an public folder under rout folder(nex-blog-app)
+--------------------------------------------------------
+
+
+    import { ConnectDB } from "@/lib/config/db";
+    const{NextResponse} = require("next/server")
+    import {writeFile} from 'fs/promises'
+
+    const LoadDB=async () =>{
+        await ConnectDB();
+    }
+
+    LoadDB();
+    
+    export async function GET(request) {
+ 
+    return NextResponse.json({msg:"API working"})
+}
+
+export async function POST(request) {
+    const formData=await request.formData();
+    const timestamp = Date.now();
+
+    const image = formData.get('image');
+    const imageByteData = await image.arrayBuffer();
+    const buffer = Buffer.from(imageByteData);
+    const path = `./public/${timestamp}_${image.name}`;
+    await writeFile(path,buffer);
+    const imageUrl =`/${timestamp}_${image.name}`;
+    console.log(imageUrl);
+    return NextResponse.json({imageUrl})
+}
+------------------------------------------------------------1726010603892_blog_pic_14.png....we got this path from response if we add this one 
+
+http://localhost:3000/1726010603892_blog_pic_14.png... we will get the image 
+
+------------------------------------------------
+
+
+import { ConnectDB } from "@/lib/config/db";
+import BlogModel from "@/lib/models/BlogModels";
+const{NextResponse} = require("next/server")
+import {writeFile} from 'fs/promises'
+
+const LoadDB=async () =>{
+    await ConnectDB();
+}
+
+LoadDB();
+
+export async function GET(request) {
+
+return NextResponse.json({msg:"API working"})
+}
+
+export async function POST(request) {
+const formData=await request.formData();
+const timestamp = Date.now();
+
+const image = formData.get('image');
+const imageByteData = await image.arrayBuffer();
+const buffer = Buffer.from(imageByteData);
+const path = `./public/${timestamp}_${image.name}`;
+await writeFile(path,buffer);
+const imageUrl =`/${timestamp}_${image.name}`;
+
+const blogData = {
+    title: `${formData.get('title')}`,
+    description: `${formData.get('description')}`,
+    category: `${formData.get('category')}`,
+    author: `${formData.get('author')}`,
+    image: `${imageUrl}`,
+    authorImg: `${formData.get('authorImg')}`, // Handle similarly if it's an image
+};
+
+await BlogModel.create(blogData);
+console.log("Blog saved")
+
+return NextResponse.json({success:true,msg:"Blog added"})
+}
+--------------------------------------------------
+
+add filenames 
+
+body,form
+
+title,description,category,author,image,authorImg
+------------------------------------------------------------------------
+https://cloud.mongodb.com/v2/66dee32e7dca81058b7bf057#/metrics/replicaSet/66dee572f4097d5c1c9240fe/explorer/blog-app/blogs/find
+
+database 
+we will get the values 
+data is stored in DB and image is stored in public folder 
+------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+

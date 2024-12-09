@@ -1,0 +1,291 @@
+5-Blog list design
+
+admin->BlogList->page.jsx
+'use client'
+import React from 'react'
+
+const page = () => {
+  return (
+    <div className='flex-1 pt-5 px-5 sm:pt-12 sm:pl-16'>
+      <h1>All blogs</h1>
+      <div className='relative h-[80vh] max-w-[850px] overflow-x-auto mt-4 border border-gray-400 scrollbar-hide'>
+
+      </div>
+    </div>
+  )
+}
+
+export default page
+
+------------
+global.css
+
+add 
+
+.scrollbar-hide::webkit-scrollbar{
+   display: none;
+}
+.scrollbar-hide{
+    display: none;
+ }
+ ------------------------------------
+'use client'
+import React from 'react'
+
+const page = () => {
+  return (
+    <div className='flex-1 pt-5 px-5 sm:pt-12 sm:pl-16'>
+      <h1>All blogs</h1>
+      <div className='relative h-[80vh] max-w-[850px] overflow-x-auto mt-4 border border-gray-400 scrollbar-hide'>
+              <table className='w-full text-sm text-gray-500'>
+              <thead className='text-sm text-gray-700 text-left uppercase bg-gray-50'>
+                 <tr>
+                  <th scope='col' className='hidden sm:block px-6 py-3'> 
+                     Author Name
+                  </th>
+                  <th scope='col' className='px-6 py-3'> 
+                     Blog Title
+                  </th>
+                  <th scope='col' className=' px-6 py-3'> 
+                     Date
+                  </th>
+                  <th scope='col' className='px-6 py-3'> 
+                     Action
+                  </th>
+                 </tr>
+              </thead>
+              <tbody>
+                
+              </tbody>
+              </table>
+      </div>
+    </div>
+  )
+}
+
+export default page
+-------------------------------
+Component->admin component->new folder(BlogTableItem)
+rafce
+import React from 'react'
+import Image from 'next/image'
+
+const BlogTableItem = (authorImg,title) => {
+  return (
+    <tr className='bg-white border-b'>
+          <th scope='row' className='items-center gap-3  hidden sm:flex px-6 py-4 font font-medium text-gray-900 whitespace-nowrap'>
+              <Image src={authorImg?authorImg:assets.profile_icon}/>
+          </th>
+          <td className='px-6 py-4'>
+            {title?title:"no title"}
+          </td>
+          <td className='px-6 py-4'>
+            {"11/jan/2024"} 
+          </td>
+          <td className='px-6 py-4'>
+           x
+          </td>
+    </tr>
+  )
+}
+
+export default BlogTableItem
+
+--------------
+
+add this on ein tbody 
+'use client'
+import React from 'react'
+import BlogTableItem from '@/Components/AdminComponents/BlogTableItem'
+const page = () => {
+  return (
+    <div className='flex-1 pt-5 px-5 sm:pt-12 sm:pl-16'>
+      <h1>All blogs</h1>
+      <div className='relative h-[80vh] max-w-[850px] overflow-x-auto mt-4 border border-gray-400 scrollbar-hide'>
+              <table className='w-full text-sm text-gray-500'>
+              <thead className='text-sm text-gray-700 text-left uppercase bg-gray-50'>
+                 <tr>
+                  <th scope='col' className='hidden sm:block px-6 py-3'> 
+                     Author Name
+                  </th>
+                  <th scope='col' className='px-6 py-3'> 
+                     Blog Title
+                  </th>
+                  <th scope='col' className=' px-6 py-3'> 
+                     Date
+                  </th>
+                  <th scope='col' className='px-6 py-3'> 
+                     Action
+                  </th>
+                 </tr>
+              </thead>
+              <tbody>
+                <BlogTableItem/>
+              </tbody>
+              </table>
+      </div>
+    </div>
+  )
+}
+
+export default page
+------------------
+
+Global.css
+}
+.scrollbar-hide{
+    -ms-overflow-style:none;
+    scrollbar-width:none;
+ }
+----------------
+BlogTableItem 
+
+import React from 'react'
+import Image from 'next/image'
+import { assets } from '@/Assets/assets'
+
+const BlogTableItem = ({authorImg,title,author}) => {
+  return (
+
+    <tr className='bg-white border-b'>
+          <th scope='row' className='items-center gap-3  hidden sm:flex px-6 py-4 font font-medium text-gray-900 whitespace-nowrap'>
+              <Image width={40} height={40} src={authorImg?authorImg:assets.profile_icon}/>
+              <p>{author?author:"No author"}</p>
+          
+          </th>
+          <td className='px-6 py-4'>
+            {title?title:"no title"}
+          </td>
+          <td className='px-6 py-4'>
+            {"11/jan/2024"} 
+          </td>
+          <td className='px-6 py-4 cursor-pointer'>
+           x
+          </td>
+    </tr>
+  )
+}
+
+export default BlogTableItem
+
+----------------------------------------------------------------------------------------------------------------------
+
+Next we need to display all blog in bloglist component
+
+const[blogs,setBlogs] =useState([]);
+
+    const fetchBlogs = async ()=>{
+      const response = await axios.get('/api/blog');
+      setBlogs(response.data.blogs)
+    }
+
+By using axios we will store all blog datas in response ... then that data will store in setBlogs ....
+------------------
+
+next we need to execute the function when it's loaded 
+
+
+<tbody>
+               {
+                  blogs.map((item,index)=>{
+                     return <BlogTableItem />
+                  })
+               }
+              </tbody>
+----
+
+
+import React from 'react'
+import Image from 'next/image'
+import { assets } from '@/Assets/assets'
+
+const BlogTableItem = ({authorImg,title,author,date}) => {
+  
+  const BlogDate = new Date(date);
+  return (
+    
+    <tr className='bg-white border-b'>
+          <th scope='row' className='items-center gap-3  hidden sm:flex px-6 py-4 font font-medium text-gray-900 whitespace-nowrap'>
+              <Image width={40} height={40} src={authorImg?authorImg:assets.profile_icon}/>
+              <p>{author?author:"No author"}</p>
+          
+          </th>
+          <td className='px-6 py-4'>
+            {title?title:"no title"}
+          </td>
+          <td className='px-6 py-4'>
+            {BlogDate.toDateString()} 
+          </td>
+          <td className='px-6 py-4 cursor-pointer'>
+           x
+          </td>
+    </tr>
+  )
+}
+
+export default BlogTableItem
+-----------------------------------------------------------------------------------------------
+
+Next we need a function for to remove the blog if we click the cross icon 
+-----
+const fs= require('fs');    we will get fs library
+ fs.unlink(`./public${blog.image}`)              by using this function we can delet the image
+  -------------
+admin->api->blog->rout.js 
+
+//Creating API Endpoint to delete blog 
+ export async function DELET(request){
+    const id=await request.nextUrl.searchParams.get('id');
+    const blog = await BlogModel.findById(id);             deletid
+    fs.unlink(`./public${blog.image}`, ()=>{});            delete img
+    await BlogModel.findByIdAndDelete(id);                 daelete db
+    return NextResponse.json({msg:"Blog Deleted"})
+
+ }
+---------------------------
+bloglist ->page.jsx
+
+
+      const deleteBlog = async (mongoId)=>{
+         const response = await axios.delete('/api/blog',{
+            params:{
+               id:mongoId
+            }
+         })
+      toast.success(response.data.msg)
+      fetchBlogs();                to update the latest blogs
+      }
+-------------------------
+Next we need to add this above function to cross icon 
+bloglist ->page.jsx
+
+update 
+
+  <tbody>
+               
+               {
+                  blogs.map((item,index)=>{
+                     return <BlogTableItem key={index} mongoId={item._id} title={item.title} author={item.author} authorImg={item.authorImg} date={item.date} deleteBlog={deleteBlog}/>
+                  })
+               }
+              </tbody>
+
+-----------------------
+
+admin component-BlogItem 
+
+const BlogTableItem = ({authorImg,title,author,date,deleteBlog,mongoId}) => {
+  
+
+<td onClick={()=>deleteBlog(mongoId)} className='px-6 py-4 cursor-pointer'>
+           x
+          </td>
+-----------------------------------------------
+     
+ 
+
+
+
+
+
+

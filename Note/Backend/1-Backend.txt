@@ -1,0 +1,94 @@
+1-Backend 
+
+
+1-npm install axios  install axios for network package :-
+2-npm install react-toastify    for to make alert and error msg
+3-npm install mongoose  for data base connection 
+
+-------------------------------------------------
+Set up data base 
+search mongo db atlas data base
+---- 
+https://www.mongodb.com/products/platform/atlas-database
+-----
+sign  in 
+---
+Database(left hand side )- built database-creat-mo -go to advanced configuration-free shared-Google cloud -nearest place -create cluster- give usernae and pass word-createuser
+
+give ip address 0.0.0.0  for to load in all ip - Description (allow all)-Add entry- remove the previous one - click and close- Go to over view 
+
+Data base is created
+-0--------------------------------------------------
+Next we need to connect this database with out nest project
+-------------------------
+Vs code editor
+
+root folder (next-blog-app)-lib-2 folders(config and models )
+
+config -db.js
+
+----------------------------------------------------------
+db.js:-
+
+import mongoose from "mongoose";
+
+const ConnectDB =async ()=>{
+     await mongoose.connect('')
+}
+
+ww
+
+-----
+database -connect -compass-I have MongoDB Compass installed-mongodb+srv://rubyrelish:<db_password>@cluster0.xsvp5.mongodb.net/
+
+after this we need to add project name and rewrite our original mongogodb password   and export then we can use the database in different API
+"mongodb+srv://rubyrelish:Diamond_44@cluster0.xsvp5.mongodb.net/blog-app"
+
+
+----------------------------
+import mongoose from "mongoose";
+
+export const ConnectDB =async ()=>{
+     await mongoose.connect('mongodb+srv://rubyrelish:Diamond_44@cluster0.xsvp5.mongodb.net/blog-app')
+       console.log("DB connected");
+    }
+---------------------------------------------------------------
+models- BlogModels.js file
+
+import { Category } from "@mui/icons-material";
+import mongoose from "mongoose";
+const Schema= new mongoose.Schema({
+    title:{
+        type: String,
+        required: true
+    },
+    description:{
+        type: String,
+        required: true
+    },
+    category:{
+        type: String,
+        required: true
+    },
+    author:{
+        type: String,
+        required: true
+    },
+    image:{
+        type: String,
+        required: true
+    },
+    authorImg:{
+        type: String,
+        required :true
+    },
+    date:{
+        type: Date,
+        default: Date.now()
+    }
+})
+
+const BlogModel =mongoose.models.blog || mongoose.model('blog',Schema);
+
+export default BlogModel
+------------------------------------------------------Here we didn't create id because mongodb have default id , so we can use that ....

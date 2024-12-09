@@ -1,0 +1,189 @@
+	7-Subscription page design 
+
+admin->subscription->page.jsx
+---
+
+'use client'
+import SubsTableItem from '@/Components/AdminComponents/SubsTableItem'
+import React from 'react'
+
+const page = () => {
+  return (
+    <div className='flex-1 pt-5 px-5 sm:pt-12 sm:pl-16'>
+        <h1>All Subscriptions</h1>
+        <div className='relative max-w-[600px] h-[80vh] overflow-x-auto mt-4 border border-gray-400 scroll-hide '> 
+            <table className='w-full text-sm text-gray-500'>
+                  <thead className='text-xs text-left text-gray-700 uppercase bg-gray-50'>
+                    <tr>
+                      <th scope='col' className='px-6 py-3'>
+                        Email Subscription
+                      </th>
+                      <th scope='col' className='hidden sm:block px-6 py-3'>
+                       Date
+                      </th>
+                      <th scope='col' className='px-6 py-3'>
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                     <SubsTableItem/>
+                  </tbody>
+            </table>
+        </div>
+    </div>
+  )
+}
+
+export default page
+
+
+----------------
+component->admincomponent->SudTableItem
+
+
+import React from 'react'
+
+const SubsTableItem = ({email}) => {
+  return (
+    <tr className='bg-white border-b text-left'>
+    <th scope='row' className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>
+        {email?email: "No email"}     
+    </th>
+    <td className='px-6 py-4 hidden sm:block'>{"11 jan 2024"}</td>
+    <td className='px-6 py-4 cursor-pointer'>x</td>
+    </tr>
+  )
+}
+
+export default SubsTableItem
+
+-------------------------------------------------------GET
+
+we need to fetch all email id from database  and display in api-email- route.jsx:-
+
+api-email-route.jsx 
+ export async function GET(request) {
+     const emails = await EmailModel.find({});
+     return NextResponse.json({emails});
+ }       
+-----
+admin->subscription->page.jsx {fetch all email list}
+
+const page = () => {
+ const[emails,setEmails]=useState([]);
+
+ const fetchEmails = async ()=>{
+  const response = await axios.get('/api/email');    call the api 
+  setEmails(response.data.emails)
+
+ }
+
+ useEffect(()=>{            once the site is reload it will list all email id  one time from backend 
+  fetchEmails();
+ },[])
+----------
+ <tbody>
+                    {emails.map((item,index)=>{
+                          return <SubsTableItem key={index} mongoId={item._id} email={item.email} date={item.date}/>
+                    })}
+                     
+                  </tbody>
+-------------------------------------------------------
+SubStableItem.jsx:-
+
+import React from 'react'
+
+const SubsTableItem = ({email,mongoId,date}) => {
+  const emailDate = new Date(Date); 
+  return (
+    <tr className='bg-white border-b text-left'>
+    <th scope='row' className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>
+        {email?email: "No email"}     
+    </th>
+    <td className='px-6 py-4 hidden sm:block'>{emailDate.toDateString()}</td>
+    <td className='px-6 py-4 cursor-pointer'>x</td>
+    </tr>
+  )
+}
+
+export default SubsTableItem
+
+--------------------------------------------------------------------DELET 
+
+api-email-route.jsx
+ export async function DELETE(request) {
+     const id = await request.nextUrl.searchParams.get("id");
+     await EmailModel.findByIdAndDelete(id);
+     return NextResponse.json({success:true,msg:"Email deleted"})
+ }
+------------------------------------------------------
+
+Subscription-page.jsx
+const deleteEmail=async(mongoId)=>{
+   const response = await axios.delete('/api/email',{
+    params:{
+      id:mongoId
+    }
+   })   
+   if(response.data.success){
+    toast.success(response.data.msg)
+   } 
+   else{
+    toast.error("Error");
+    
+   }      
+ }
+----------
+
+ <tbody>
+                    {emails.map((item,index)=>{
+                          return <SubsTableItem key={index} mongoId={item._id} deleteEmail={deleteEmail} email={item.email} date={item.date}/>
+                    })}
+                     
+                  </tbody>
+----------------------------------------------------
+
+sub
+
+--
+import React from 'react'
+
+const SubsTableItem = ({email,mongoId,deleteEmail,date}) => {
+  const emailDate = new Date(Date); 
+  return (
+    <tr className='bg-white border-b text-left'>
+    <th scope='row' className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'>
+        {email?email: "No email"}     
+    </th>
+    <td className='px-6 py-4 hidden sm:block'>{emailDate.toDateString()}</td>
+    <td className='px-6 py-4 cursor-pointer' onClick={()=>deleteEmail(mongoId)}>x</td>
+    </tr>
+  )
+}
+
+export default SubsTableItem
+-------------------------------
+
+page.jsx:-
+const deleteEmail=async(mongoId)=>{
+   const response = await axios.delete('/api/email',{
+    params:{
+      id:mongoId
+    }
+   })   
+   if(response.data.success){
+    toast.success(response.data.msg)
+    fetchEmails();                            after delete fetch all un delete email 
+   } 
+   else{
+    toast.error("Error");
+    
+   }      
+ }
+
+
+
+
+
+

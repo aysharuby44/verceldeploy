@@ -1,0 +1,109 @@
+Call blog data from assets 
+
+
+assets.jsx :-
+
+export const restaurant_data = [
+    {
+      id: 1,
+      name: "Restaurant One",
+      description: "A cozy place with delicious food.",
+      image: blog_pic_1,
+      location: "Location One",
+      rating: 4.5,
+    },
+    {
+      id: 2,
+      name: "Restaurant Two",
+      description: "Famous for its spicy dishes.",
+      image: blog_pic_2,
+      location: "Location Two",
+      rating: 4.8,
+    },
+    // ... other restaurant objects
+  ];
+
+
+list.jsx :-
+
+
+// src/components/Restaurant/RestaurantList.jsx
+"use client"; // Ensure this component can use hooks
+
+import React, { useEffect, useState } from 'react';
+import RestaurantItem from './RestaurantItem';
+import { restaurant_data } from '@/Assets/assets'; // Adjust this import based on your file structure
+
+const RestaurantList = () => {
+  const [restaurants, setRestaurants] = useState([]); // Initialize as an empty array
+
+  // This function can be used to fetch data if needed; otherwise, you can directly set the data from assets.
+  const fetchRestaurants = () => {
+    // If you want to fetch dynamically, you can replace this with an API call.
+    setRestaurants(restaurant_data); // Assuming restaurant_data is an array
+  };
+
+  useEffect(() => {
+    fetchRestaurants();
+  }, []);
+
+  return (
+    <div className='flex flex-wrap justify-around gap-1 gap-y-10 mb-16 xl:mx-24'>
+      {restaurants.length > 0 ? (
+        restaurants.map((item, index) => (
+          <RestaurantItem
+            key={index}
+            id={item.id} // Adjust based on your data structure
+            image={item.image} // Make sure this exists in your data
+            title={item.title} // Make sure this exists in your data
+            description={item.description} // Make sure this exists in your data
+            category={item.category} // Make sure this exists in your data
+          />
+        ))
+      ) : (
+        <p>No restaurants available</p> // Fallback in case the array is empty
+      )}
+    </div>
+  );
+};
+
+export default RestaurantList;
+
+
+Item.jsx"
+// src/components/Restaurant/RestaurantItem.jsx
+"use client"; // Declare the component as a client component
+
+import React, { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { assets } from '@/Assets/assets'; // Adjust path as necessary
+
+const RestaurantItem = ({ title, description, category, image, id }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div
+      className={`max-w-[330px] sm:max-w-[300px] bg-white border border-white hover:shadow-[-7px_7px_0px_#FFBF00] transition-transform duration-300 ${isHovered ? 'transform scale-105' : ''}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{ width: '300px', cursor: 'pointer' }} // Adjust width as needed
+    >
+      <Link href={`/restaurants/${id}`}>
+        <Image src={image} alt={title} width={400} height={200} className='border-b border-black' />
+      </Link>
+      <p className='ml-5 mt-5 text-white px-1 inline-block bg-[#20201f] text-sm'>{category}</p>
+      <div className='p-5'>
+        <h5 className='mt-2 text-lg font-medium tracking-tight text-gray-900'>{title}</h5>
+        <p className='mb-3 text-sm tracking-tight text-gray-700' dangerouslySetInnerHTML={{ __html: description.slice(0, 120) }}></p>
+        <Link href={`/restaurants/${id}`}>
+          <div className='inline-flex items-center py-2 font-semibold text-center'>
+            View Details <Image src={assets.arrow} className='ml-2' alt='' width={12} />
+          </div>
+        </Link>
+      </div>
+    </div>
+  );
+};
+
+export default RestaurantItem;

@@ -1,0 +1,66 @@
+inside app folder -restaurant folder-route.js
+---------------------------------------
+
+
+import { ConnectDB } from "@/lib/config/db";
+import RestaurantModel from "@/lib/models/RestaurantModel"; // Adjust this import based on your model
+const { NextResponse } = require("next/server");
+import { writeFile } from 'fs/promises';
+const fs = require('fs');
+
+const LoadDB = async () => {
+    await ConnectDB();
+};
+
+LoadDB();
+
+// // API Endpoint to get all restaurants or a specific one
+// export async function GET(request) {
+//     const restaurantId = request.nextUrl.searchParams.get("id");
+//     if (restaurantId) {
+//         const restaurant = await RestaurantModel.findById(restaurantId);
+//         return NextResponse.json(restaurant);
+//     } else {
+//         const restaurants = await RestaurantModel.find({});
+//         return NextResponse.json({ restaurants });
+//     }
+// }
+
+// API Endpoint for uploading restaurant information
+export async function POST(request) {
+    const formData = await request.formData();
+    const timestamp = Date.now();
+
+    const image = formData.get('image');
+    if (!image) {
+        return NextResponse.json({ success: false, msg: "No image uploaded" });
+    }
+
+    // Convert image to buffer
+    const imageBuffer = Buffer.from(await image.arrayBuffer());
+    const imageByteData = await image.arrayBuffer();
+    const buffer = Buffer.from(imageByteData);
+    const path = `./public/${timestamp}_${image.name}`;
+    await writeFile(path, buffer);
+    const imageUrl = `/${timestamp}_${image.name}`;
+
+    const restaurantData = {
+        title: `${formData.get('title')}`,
+        description: `${formData.get('description')}`,
+        image: `${imageUrl}`,
+    };
+
+    await RestaurantModel.create(restaurantData);
+    console.log("Restaurant saved");
+
+    return NextResponse.json({ success: true, msg: "Restaurant added" });
+}
+
+// Creating API Endpoint to delete a restaurant
+// export async function DELETE(request) {
+//     const id = await request.nextUrl.searchParams.get('id');
+//     const restaurant = await RestaurantModel.findById(id);
+//     fs.unlink(`./public${restaurant.image}`, () => { });
+//     await RestaurantModel.findByIdAndDelete(id);
+//     return NextResponse.json({ msg: "Restaurant Deleted" });
+// }

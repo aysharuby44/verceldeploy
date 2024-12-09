@@ -1,0 +1,107 @@
+6-Create Router for to give function 
+app-blogs 
+
+next we need to create dynamic rout 
+blogs-[id]   folder
+
+---
+[id] --page.jsxfile
+------------------------------------
+import React from 'react'
+
+const page = ({params}) => {
+  return (
+    <div>
+      {params.id}
+    </div>
+  )
+}
+
+export default page
+
+
+if we given folder name abc we need to give that name params.abc ike that 
+------------------------------------
+For to display the blogs items according to id  ....
+
+BlogItem.js :-
+const BlogItem = ({title,description,category,image,id})
+
+BlogList.jsx:-
+
+ <BlogItem key={index} id={item.id} image={item.image} title={item.title} description={item.description} category={item.category}/>
+
+BlogItem.jsx:- write link tag before image tag and reed more div
+  <Link href={`/blogs/${id}`}> 
+       <Image src={image} alt='' width={400} height={400} className='border-b border-black' />
+       </Link>
+--------
+
+ <Link href={`/blogs/${id}`}>
+         <div className='inline-flex items-center py-2 font-semibold text-center'>
+           Read more<Image src={assets.arrow} className='ml-2' alt='' width={12} /> 
+         </div>
+         </Link>
+----------------------------------------------------
+
+save all id in to one state variable 
+
+  1-const [data,setData]=useState[null];
+
+create a function:-
+
+ 2-const fetchBlogData =() =>{
+
+    }
+
+we need to execute the function if the components is loaded for that we can use useeffect
+
+4-useEffect
+
+
+set up it's a client event 
+5-'use client'          
+
+
+------------------------------------------------------
+'use client';
+import { blog_data } from '@/Assets/assets';
+import React, { useEffect, useState } from 'react';
+
+const Page = ({ params }) => {
+  const [data, setData] = useState(null);
+
+  const fetchBlogData = () => {
+    for (let i = 0; i < blog_data.length; i++) {
+      if (Number(params.id) === blog_data[i].id) {
+        setData(blog_data[i]);
+        console.log(blog_data[i]);
+        break;
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchBlogData();
+  }, []); // Dependency array to trigger useEffect when params.id changes
+
+  return (
+    <div>
+      {params.id}
+    </div>
+  );
+};
+
+export default Page;
+------------------------------------------------------------------
+
+Design blog page 
+------------------------------------------
+rtemove {params.id}   and add 
+<div className='bg-gray-200 py-5 px-5 md:px-12 lg:px-28'>
+     <div className='flex justify-between items-center'>
+       <Image src={assets.logo} width={180} alt='' className='w-[130px] sm:w-auto' />
+       <button className='flex items-centergap-2 font-medium py-1 px-3 sm:py-3 am:px-6 border border-black shadow-[-7px_7px_0px_#000000]'>Get Started<Image src={assets.arrow} alt=''/></button>
+     </div>
+    </div>
+-------------------------------------

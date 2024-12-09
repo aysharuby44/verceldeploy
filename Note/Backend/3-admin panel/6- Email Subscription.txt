@@ -1,0 +1,103 @@
+6- Email Subscription [here we have 3 files ... {inj api-email-route.js- this one is for to make route between backent and frontend }{ EmailModel- bACKEND FOR TO ADD DATA IN DB }{Header- frontend will get the user entering email details ..onChange={(e)=>setEmail(e.target.value)} - this for to update the setEmail} ]
+
+
+lib-models-EmailModels.js:-
+----------------
+
+import { request } from 'express';
+import mongoose from 'mongoose';
+
+const Schema=new mongoose.Schema({
+    email:{
+        type:stringify,
+        required:true
+    },
+    date:{
+    type:Date,
+    default:Date.now()
+    }
+})
+
+const EmailModel =mongoose.model.email || mongoose.model('email',Schema);
+
+export default EmailModel;
+--------------------------------------------
+api-email-route.js 
+export async function POST(request){
+    const formData = await request.formData();         after post request formData detrails will save in toformDATA
+    const emailData = {
+         email:`${formData.get('email')}`,               IF THE FIELD NAME WITH email will get 
+    }
+}
+ ---------------------------------------
+-------------------------------------------
+We NEED TO SAVE THIS ONE IN TO DATA BASE 
+import {ConnectDB} from '@/lib/config/db';
+import { NextResponse } from 'next/server';
+
+const LoadDB=async () =>{
+       await ConnectDB();
+}
+LoadDB();
+
+export async function POST(request){
+    const formData = await request.formData();
+    const emailData = {
+         email:`${formData.get('email')}`,
+    }
+    await EmailModel.create(emailData); 
+    return NextResponse.json({success:true,msg:"Emil subscribed "})
+}
+       
+------------------------------
+There is one email filed in header , we  need to make connection  in api ->   
+
+components->Header ->
+  const[email,setEmail]=useState("");
+
+In input field:-
+
+<input onChange={(e)=>setEmail(e.target.value)} value={email} type='email' placeholder='Enter your email' className='pl-4 outline-none'  />
+          
+
+--------
+
+make sumit function
+<form onSubmit={onSubmitHandler} className='flex justify-between max-w-[500px] scale-75 sm:scale-100 mx-auto mt-10 border border-black shadow-[-7px_7px_0px_#000000]' action="">
+        
+--
+
+  const onSubmitHandler =async(e)=>{
+     e.preventDefault();                                          prevent website reloading
+     const formData= new FormData();   
+     formData.append("email",email);
+     const response = await axios.post('/api/email',formData);    here we will submit the input values
+     if (response.data.success){
+      toast.success(response.data.msg);             
+      setEmail("");                                              if the the function is success the input field will be empty 
+     }
+     else{
+      toast.error("Error")
+     }
+  }
+
+--------------------------------------
+page.jsx - main 
+'use client'
+import Header from "../Components/Header"
+import BlogList from "@/Components/BlogList"
+import Footer from "@/Components/Footer"
+import { ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
+export default function Home() {
+  return (
+    <>
+    <ToastContainer theme="dark"/>
+    <Header/>
+    <BlogList/>
+    <Footer/>
+    </>
+  )
+}
+
+------------------------------------------------   Full code in 

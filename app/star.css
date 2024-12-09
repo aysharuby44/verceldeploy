@@ -1,0 +1,33 @@
+.stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    pointer-events: none; /* Allows clicks to pass through stars */
+    z-index: 0; /* Ensure it is below important content */
+  }
+  
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background-color: #FFBF00; /* Change this to desired color */
+    animation: float 5s linear infinite; /* Star float animation */
+    opacity: 0.8; /* Adjust star opacity */
+    pointer-events: none; /* Prevents blocking mouse events */
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translateY(0) translateX(0) scale(1);
+    }
+    50% {
+      transform: translateY(-20px) translateX(10px) scale(0.8); /* Adjusts floating path */
+    }
+    100% {
+      transform: translateY(0) translateX(0) scale(1);
+    }
+  }
+  
+  

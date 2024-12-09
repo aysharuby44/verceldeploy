@@ -1,0 +1,21 @@
+8- Change description from admin panel 
+
+admin-blogs-page.jsx
+
+remove:-
+ <h1 className='my-8 text-[26px] font-semibold'>Introduction:</h1>
+
+remove all static description :-
+and add 
+
+<div className='blog-content'dangerouslySetInnerHTML={{__html:data.description}}></div>
+--------------
+component->Blog item remove description and change the same p tag 
+
+<p className='mb-3 text-sm tracking-tight text-gray-700' dangerouslySetInnerHTML={{__html:description.slice(0,120)}}></p>
+
+
+here only we will get maximum 120 words in blog list 
+---------------
+ 
+     

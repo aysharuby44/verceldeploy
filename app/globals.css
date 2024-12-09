@@ -1,0 +1,372 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.scrollbar-hide::-webkit-scrollbar {
+   display: none;
+}
+.scrollbar-hide {
+   -ms-overflow-style: none;
+   scrollbar-width: none;
+}
+
+.blog-content {
+   padding: 30px 0;
+}
+
+.blog-content b {
+   margin-bottom: 10px;
+   font-weight: 500;
+}
+
+.blog-content p {
+   margin-bottom: 10px;
+}
+
+.blog-content h1 {
+   margin-bottom: 10px;
+   font-weight: 600;
+   font-size: 36px;
+}
+
+.blog-content h2 {
+   margin-bottom: 10px;
+   font-weight: 500;
+   font-size: 22px;
+}
+
+.blog-content h3 {
+   margin-bottom: 10px;
+   font-weight: 500;
+   font-size: 18px;
+}
+
+@keyframes slideToCenter {
+   0% {
+     transform: translateX(-100%); /* Start off-screen to the left */
+     opacity: 0; /* Optional: Start invisible */
+   }
+   50% {
+     transform: translateX(0); /* Move to center */
+     opacity: 1; /* Optional: Fully visible */
+   }
+   100% {
+     transform: translateX(0); /* Stay in place */
+     opacity: 1;
+   }
+}
+
+.moving-text {
+   display: block; /* For paragraphs to behave normally */
+   white-space: normal; /* Allows line breaks */
+   animation: slideToCenter 2s ease forwards; /* Animates movement from left to center */
+}
+
+.moving-text-container {
+   background-image: url('../Assets/bg9.png');
+   background-size: cover; /* Ensures the image covers the entire container */
+   background-position: center; /* Keeps the image centered */
+   background-repeat: no-repeat; /* Prevents the image from repeating */
+   padding: 20px; /* Adds some padding around the text */
+}
+
+.restaurent-bg {
+   background-image: url('../Assets/bg-r2.png');
+   background-size: cover; /* Ensures the image covers the entire container */
+   background-position: center; /* Keeps the image centered */
+   background-repeat: no-repeat; /* Prevents the image from repeating */
+   height: 50vh; /* Sets the height to 100% of the viewport height */
+   padding: 20px; /* Padding for the content inside */
+}
+
+.hotel-bg {
+   background-image: url('../Assets/bg-h.png');
+   background-size: cover; /* Ensures the image covers the entire container */
+   background-position: center; /* Keeps the image centered */
+   background-repeat: no-repeat; /* Prevents the image from repeating */
+   height: 50vh; /* Sets the height to 100% of the viewport height */
+   padding: 20px; /* Padding for the content inside */
+}
+.hotel-bg1{
+  background-image: url('../Assets/bg-h1.jpg');
+  background-size: cover; /* Ensures the image covers the entire container */
+   background-position: center; /* Keeps the image centered */
+   background-repeat: no-repeat; /* Prevents the image from repeating */
+   height: 50vh; /* Sets the height to 100% of the viewport height */
+   padding: 20px; /* Padding for the content inside */
+  
+  
+}
+.hotel-bg2{
+  background-image: url('../Assets/bg-h2.jpg');
+  background-size: cover; /* Ensures the image covers the entire container */
+   background-position: center; /* Keeps the image centered */
+   background-repeat: no-repeat; /* Prevents the image from repeating */
+   height: 50vh; /* Sets the height to 100% of the viewport height */
+   padding: 20px; /* Padding for the content inside */
+}
+
+.moving-ht-container {
+   background-image: url('../Assets/bg-ht.png');
+   background-size: cover; /* Ensures the image covers the entire container */
+   background-position: center; /* Keeps the image centered */
+   background-repeat: no-repeat; /* Prevents the image from repeating */
+   padding: 20px; /* Adds some padding around the text */
+}
+
+.rotating-ht-container {
+   background-image: url('../Assets/bg9.png');
+   background-size: cover; /* Ensures the image covers the entire container */
+   background-position: center; /* Keeps the image centered */
+   background-repeat: no-repeat; /* Prevents the image from repeating */
+   padding: 20px; /* Adds some padding around the text */
+   animation: rotate-background 20s linear infinite; /* Adds rotation animation */
+}
+
+@keyframes rotate-background {
+   0% {
+     transform: rotate(0deg); /* Start at original position */
+   }
+   100% {
+     transform: rotate(360deg); /* Rotate a full circle */
+   }
+}
+
+
+/*---------------------image rotating-----------------------*/
+
+.rotating-img-container {
+  background-size: cover; /* Ensures the image covers the entire container */
+  background-position: center; /* Keeps the image centered */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  padding: 20px; /* Adds some padding around the text */
+  animation: rotate-imgbackground 20s linear infinite; /* Adds rotation animation */
+}
+
+@keyframes rotate-imgbackground {
+  0% {
+    transform: rotate(0deg); /* Start at original position */
+  }
+  100% {
+    transform: rotate(360deg); /* Rotate a full circle */
+  }
+}
+
+/* Custom cursor container */
+.custom-cursor {
+   width: 30px; /* Adjust to your image size */
+   height: 30px; /* Adjust to your image size */
+   position: absolute;
+   pointer-events: none; /* Prevent the cursor from interacting with elements */
+   z-index: 9999; /* Ensure the custom cursor is on top */
+   background-image: url('../Assets/logo3.png'); /* Replace with your image path */
+   background-size: contain; /* Scale the image to fit the cursor area */
+   background-repeat: no-repeat; /* Prevent the image from repeating */
+   transition: transform 0.1s ease-in-out;
+}
+
+
+.restaurent-bg {
+  background-image: url('../Assets/bg-mh.png');
+  background-size: cover; /* Ensures the image covers the entire container */
+  background-position: center; /* Keeps the image centered */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  height: 50vh; /* Sets the height to 100% of the viewport height */
+  padding: 20px; /* Padding for the content inside */
+}
+.about-bg {
+   background-image: url('../Assets/ab-bg.png');
+   background-size: cover; /* Ensures the image covers the entire container */
+   background-position: center; /* Keeps the image centered */
+   background-repeat: no-repeat; /* Prevents the image from repeating */
+   height: 50vh; /* Sets the height to 100% of the viewport height */
+   padding: 20px; /* Padding for the content inside */
+ }
+
+
+
+
+/*--------------Leaf animation----------------------*/
+
+ @keyframes leafMove {
+   0% {
+     transform: translateX(0);
+   }
+   50% {
+     transform: translateX(10px);
+   }
+   100% {
+     transform: translateX(0);
+   }
+ }
+ 
+ .leaf-animation {
+   animation: leafMove 1s infinite ease-in-out;
+ }
+ /*------------------------------Zoom in zoom out --------------------------*/
+ @keyframes zoomsec {
+   0% {
+     transform: translateX(0) scale(1); /* Start at normal size */
+   }
+   50% {
+     transform: translateX(10px) scale(1.2); /* Zoom in */
+   }
+   100% {
+     transform: translateX(0) scale(1); /* Back to normal size */
+   }
+ }
+ 
+ .zoomsec {
+   animation: zoomsec 4s infinite ease-in-out;
+ }
+
+ /*------------------portfolio----------------------*/
+ .portfolio-bg {
+  background-image: url('../Assets/p-bg.png');
+  background-size: cover; /* Ensures the image covers the entire container */
+  background-position: center; /* Keeps the image centered */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  height: 50vh; /* Sets the height to 100% of the viewport height */ /* Padding for the content inside */
+ 
+}
+.portfolio2-bg {
+  background-image: url('../Assets/p3-bg.png');
+  background-size: cover; /* Ensures the image covers the entire container */
+  background-position: center; /* Keeps the image centered */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  height: 50vh; /* Sets the height to 100% of the viewport height */ /* Padding for the content inside */
+ 
+}
+.blog-content p {
+  margin-bottom: 1em; /* Adds space between paragraphs */
+  line-height: 1.6;   /* Increases line height for readability */
+}
+.blog-content {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #333;
+  margin: 20px auto;
+  padding: 10px 20px;
+  max-width: 800px;
+}
+
+
+.blog-content h2 {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-top: 20px;
+  color: #444;
+}
+
+.highlighted-link {
+  color: #2a664e; /* Choose your desired color */
+  font-weight: bold;
+  text-decoration: none;
+}
+.highlighted-link:hover {
+  text-decoration: underline;
+}
+body {
+  overflow-x: hidden;
+}
+ /* start */
+
+ .start p {
+  position: relative;
+  padding-left: 50px; /* To make room for the star */
+  font-size: 16px;
+  display: flex;
+  justify-content: center; /* Center the content */
+  align-items: center; /* Vertically align the items */
+  gap: 10px; /* Space between the star and the line */
+}
+
+.star {
+  font-size: 24px; /* Size of the star */
+  background: linear-gradient(45deg, #47bcc0, #ae55c7); /* Gradient background */
+  -webkit-background-clip: text; /* Apply the gradient to the text */
+  color: transparent; /* Make the star text transparent to show the gradient */
+}
+
+.line {
+  display: inline-block;
+  width: 2px; /* Width of the line */
+  height: 20px; /* Height of the line */
+  background: linear-gradient(45deg, #47bcc0, #ae55c7); /* Same gradient as the star */
+  position: absolute;
+  top: 100%; /* Position the line below the star */
+  left: 50%; /* Center the line */
+  transform: translateX(-50%); /* Center the line horizontally */
+}
+
+
+/* ----------------border movements----------------- */
+/* Standard border animation for the div */
+.animate-border {
+  position: relative;
+  padding: 20px;
+  border: 4px solid transparent;
+  background-clip: content-box;  /* Makes sure the background doesn't cover the border */
+  animation: borderAnimation 3s linear infinite;
+}
+
+.animate-bordera {
+  position: relative;
+  padding: 5px;
+  border: 2px solid transparent;
+  background-clip: content-box;  /* Makes sure the background doesn't cover the border */
+  animation: borderAnimation 3s linear infinite;
+}
+
+@keyframes borderAnimation {
+  0% {
+    border-top-color: #f5f3f5;   /* Start with top border */
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+  }
+  25% {
+    border-top-color: transparent;
+    border-right-color: #f5f3f5; /* Move to right border */
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+  }
+  50% {
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: #f5f3f5; /* Move to bottom border */
+    border-left-color: transparent;
+  }
+  75% {
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: #f5f3f5;  /* Move to left border */
+  }
+  100% {
+    border-top-color: #f5f3f5;   /* Cycle back to top border */
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+  }
+}
+
+
+
+
+/* Define the rotating animation */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Apply the animation to the image container */
+.animate-rotate {
+  animation: rotate 10s linear infinite;
+  width: 300px; /* Adjust size */
+  height: 300px; /* Adjust size */
+}

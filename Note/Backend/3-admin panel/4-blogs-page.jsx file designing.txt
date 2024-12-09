@@ -1,0 +1,43 @@
+4-blogs:-page.jsx file designing 
+
+
+edit :;  const fetchBlogData = () => {
+   
+  };
+
+
+in backrnd :-blog->route.js
+
+ const blogId = request.nextUrl.searchParams.get("id")     from frontend we will get an id and we will save here in backend 
+
+change the get :-
+export async function GET(request) {
+
+    const blogId = request.nextUrl.searchParams.get("id");
+    if(blogId){
+        const blog= await BlogModel.findById(blogId);
+        return NextResponse.json(blog);
+    }else{
+        const blogs = await BlogModel.find({});
+        return NextResponse.json({blogs})
+    }
+
+    
+}
+---------------------------
+
+we can check is this working through thender client ... get ->send   we will get all value ...
+
+query->(give parameter)--id (and value )any product id ....  and send that time we will get that id product datas .... so get method is properly working 
+
+--------------------
+  const fetchBlogData =async () => {
+        const response = await axios.get('/api/blog',{
+           params:{
+            id:params.id
+           }
+        })
+        setData(response.data);
+  };
+--------------------------------
+next we want to create Blog_list
